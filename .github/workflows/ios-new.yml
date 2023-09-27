@@ -35,6 +35,9 @@ jobs:
     - name: Build iOS App
       run: npx ionic cordova build ios --prod --release
 
+    - name: Install Latest Ionic CLI
+      run: npm install -g @ionic/cli
+
     - name: Archive iOS App
       run: |
         cd platforms/ios/build/device
