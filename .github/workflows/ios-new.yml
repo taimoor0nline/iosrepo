@@ -36,7 +36,9 @@ jobs:
       run: npx ionic cordova build ios --prod --release
 
     - name: Install Latest Ionic CLI
-      run: npm install -g @ionic/cli
+      run: |
+       npm install -g @ionic/cli
+       npm i cordova@6.5.0 --save
 
     - name: Archive iOS App
       run: |
