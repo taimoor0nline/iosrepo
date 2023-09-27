@@ -40,6 +40,11 @@ jobs:
     - name: List project directory
       run: ls -la
 
+    - name: List BOD directory contents
+      run: |
+        cd BOD
+        ls -la
+
     - name: Build iOS App
       run: |
         cd BOD
