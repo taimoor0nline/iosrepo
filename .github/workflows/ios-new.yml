@@ -42,6 +42,7 @@ jobs:
 
     - name: Build iOS App
       run: npx ionic cordova build ios --prod --release
+      working-directory: ${{ github.workspace }}
 
     
 
