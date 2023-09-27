@@ -31,32 +31,16 @@ jobs:
         echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 -d > profile.mobileprovision
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-    
-    - name: Install cordova
-      run: |
-       npm i cordova@6.5.0 --save
 
-    - name: List project directory
-      run: ls -la
-
-    - name: List BOD directory contents
+    - name: Build and Archive App
       run: |
         cd BOD
-        ls -la
-
-    - name: Build iOS App with Cordova
-      working-directory: ${{ github.workspace }}/BOD
-      run: cordova build ios --release
-
-    
-
-    - name: Archive iOS App
-      run: |
-        cd platforms/ios/build/device
-        zip -r ${{ github.workspace }}/BodApp.ipa *.app
+        xcodebuild -workspace BOD.xcworkspace -scheme BOD -configuration Release clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        xcodebuild -workspace BOD.xcworkspace -scheme BOD -configuration Release -archivePath $PWD/build/BOD.xcarchive archive
+        xcodebuild -exportArchive -archivePath $PWD/build/BOD.xcarchive -exportPath $PWD/build -exportOptionsPlist $PWD/exportOptions.plist
 
     - name: Upload iOS App
       uses: actions/upload-artifact@v2
       with:
         name: BodApp.ipa
-        path: BodApp.ipa
+        path: BOD/build/BodApp.ipa
