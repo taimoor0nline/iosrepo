@@ -37,10 +37,11 @@ jobs:
 
     - name: Build and Archive App
       run: |
-        cd BOD
-        xcodebuild -workspace BOD.xcworkspace -scheme BOD -configuration Release clean build CODE_SIGN_IDENTITY="iPhone Developer" CODE_SIGNING_REQUIRED=YES PROVISIONING_PROFILE_SPECIFIER="Name of your provisioning profile"
-        xcodebuild -workspace BOD.xcworkspace -scheme BOD -configuration Release -archivePath $PWD/build/BOD.xcarchive archive
+       cd BOD
+        xcodebuild -workspace $PWD/BOD.xcworkspace -scheme BOD -configuration Release clean build CODE_SIGN_IDENTITY="iPhone Developer" CODE_SIGNING_REQUIRED=YES PROVISIONING_PROFILE_SPECIFIER="bodbod"
+        xcodebuild -workspace $PWD/BOD.xcworkspace -scheme BOD -configuration Release -archivePath $PWD/build/BOD.xcarchive archive
         xcodebuild -exportArchive -archivePath $PWD/build/BOD.xcarchive -exportPath $PWD/build -exportOptionsPlist $PWD/exportOptions.plist
+
 
 
     - name: Upload iOS App
